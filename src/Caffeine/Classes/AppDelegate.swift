@@ -127,11 +127,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUStandardU
             seconds = 2
         }
         
-        if minutes != 0 {
-            self.activate(withTimeoutDuration: TimeInterval(seconds))
-        } else {
-            self.activate()
-        }
+        self.activate(withTimeoutDuration: seconds)
     }
     
     @IBAction func showAbout(_ sender:Any?) {
@@ -154,16 +150,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUStandardU
     // MARK:  Public
     // MARK:  ---
     func activate() {
-        self.activate(withTimeoutDuration: 0.0)
+        let defaultMinutesDuration = UserDefaults.standard.integer(forKey: "CADefaultDuration")
+        var seconds = defaultMinutesDuration*60
+        
+        if seconds == -60 {
+            seconds = 2
+        }
+        
+        self.activate(withTimeoutDuration: seconds)
     }
     
-    func activate(withTimeoutDuration interval:TimeInterval) {
+    func activate(withTimeoutDuration seconds:Int) {
         if let timeoutTimer = self.timeoutTimer {
             timeoutTimer.invalidate()
         }
         
-        if interval > 0 {
-            timeoutTimer = Timer.scheduledTimer(timeInterval: interval,
+        if seconds > 0 {
+            timeoutTimer = Timer.scheduledTimer(timeInterval: TimeInterval(seconds),
                                                 target: self,
                                                 selector: #selector(AppDelegate.timeoutReached(_:)),
                                                 userInfo: nil,
@@ -194,18 +197,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUStandardU
         if isActive {
             self.deactivate()
         } else {
-            let defaultMinutesDuration = UserDefaults.standard.integer(forKey: "CADefaultDuration")
-            var seconds = defaultMinutesDuration*60
-            
-            if seconds == -60 {
-                seconds = 2
-            }
-            
-            if defaultMinutesDuration == 0 {
-                self.activate(withTimeoutDuration: TimeInterval(seconds))
-            } else {
-                self.activate()
-            }
+            self.activate()
         }
     }
     
