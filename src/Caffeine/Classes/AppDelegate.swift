@@ -112,7 +112,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUStandardU
     
     @IBAction func statusItemAction(_ sender:Any?) {
         let event = NSApp.currentEvent
-        if event?.type == .rightMouseUp {
+        let modifierFlags = event?.modifierFlags ?? []
+        if event?.type == .rightMouseUp || (event?.type == .leftMouseUp && modifierFlags.contains(.control)) {
             statusItem.popUpMenu(menu)
         } else {
             toggleActive(sender)
