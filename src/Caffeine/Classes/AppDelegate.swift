@@ -283,6 +283,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUStandardU
 }
 
 // MARK: - App Intents
+@available(macOS 13.0, *)
 enum CaffeineIntentError: Swift.Error, LocalizedError {
     case unableToActivate
     case unableToDeactivate
@@ -300,6 +301,7 @@ enum CaffeineIntentError: Swift.Error, LocalizedError {
     }
 }
 
+@available(macOS 13.0, *)
 struct EnableCaffeineIntent: AppIntent {
     static var title: LocalizedStringResource = "Enable Caffeine"
     static var description = IntentDescription("Activate Caffeine to prevent your Mac from sleeping")
@@ -313,6 +315,7 @@ struct EnableCaffeineIntent: AppIntent {
     }
 }
 
+@available(macOS 13.0, *)
 struct DisableCaffeineIntent: AppIntent {
     static var title: LocalizedStringResource = "Disable Caffeine"
     static var description = IntentDescription("Deactivate Caffeine to allow your Mac to sleep normally")
@@ -326,6 +329,7 @@ struct DisableCaffeineIntent: AppIntent {
     }
 }
 
+@available(macOS 13.0, *)
 struct ToggleCaffeineIntent: AppIntent {
     static var title: LocalizedStringResource = "Toggle Caffeine"
     static var description = IntentDescription("Toggle Caffeine between active and inactive states")
@@ -341,6 +345,7 @@ struct ToggleCaffeineIntent: AppIntent {
     }
 }
 
+@available(macOS 13.0, *)
 struct CaffeineShortcutsProvider: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {
         AppShortcut(
