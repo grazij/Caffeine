@@ -7,11 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25DC4DE42E7D5C2700021A56 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 25DC4DE32E7D5C2700021A56 /* Sparkle */; };
 		F21DAB042C3040F70044ACF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F21DAB032C3040F70044ACF2 /* Assets.xcassets */; };
 		F21DAB112C30422A0044ACF2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F21DAB0F2C30422A0044ACF2 /* AppDelegate.swift */; };
 		F21DAB1A2C3042430044ACF2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F21DAB172C3042430044ACF2 /* MainMenu.xib */; };
-		F21DAB1F2C30449A0044ACF2 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F21DAB1D2C3044870044ACF2 /* Sparkle.framework */; };
-		F21DAB202C30449A0044ACF2 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F21DAB1D2C3044870044ACF2 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F21DAB242C3044A20044ACF2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F21DAB232C3044A20044ACF2 /* IOKit.framework */; };
 		F21DAB2C2C30483A0044ACF2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F21DAB272C30483A0044ACF2 /* Localizable.strings */; };
 		F21DAB2D2C30483A0044ACF2 /* MainMenu.strings in Resources */ = {isa = PBXBuildFile; fileRef = F21DAB292C30483A0044ACF2 /* MainMenu.strings */; };
@@ -32,7 +31,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F21DAB202C30449A0044ACF2 /* Sparkle.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -46,7 +44,6 @@
 		F21DAB0F2C30422A0044ACF2 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F21DAB132C30423D0044ACF2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F21DAB182C3042430044ACF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		F21DAB1D2C3044870044ACF2 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../sparkle/framework/Sparkle.framework; sourceTree = "<group>"; };
 		F21DAB232C3044A20044ACF2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		F21DAB282C30483A0044ACF2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F21DAB2A2C30483A0044ACF2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
@@ -98,7 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F21DAB1F2C30449A0044ACF2 /* Sparkle.framework in Frameworks */,
+				25DC4DE42E7D5C2700021A56 /* Sparkle in Frameworks */,
 				F21DAB242C3044A20044ACF2 /* IOKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -109,7 +106,6 @@
 		F21DAAF32C3040F50044ACF2 = {
 			isa = PBXGroup;
 			children = (
-				F21DAB0E2C3041ED0044ACF2 /* Sparkle */,
 				F21DAAFE2C3040F50044ACF2 /* Caffeine */,
 				F21DAAFD2C3040F50044ACF2 /* Products */,
 				F21DAB222C3044A20044ACF2 /* Frameworks */,
@@ -131,14 +127,6 @@
 				F21DAB122C30422F0044ACF2 /* Resources */,
 			);
 			path = Caffeine;
-			sourceTree = "<group>";
-		};
-		F21DAB0E2C3041ED0044ACF2 /* Sparkle */ = {
-			isa = PBXGroup;
-			children = (
-				F21DAB1D2C3044870044ACF2 /* Sparkle.framework */,
-			);
-			name = Sparkle;
 			sourceTree = "<group>";
 		};
 		F21DAB102C30422A0044ACF2 /* Classes */ = {
@@ -242,6 +230,9 @@
 				"zh-Hans",
 			);
 			mainGroup = F21DAAF32C3040F50044ACF2;
+			packageReferences = (
+				25DC4DE22E7D5C2700021A56 /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
 			productRefGroup = F21DAAFD2C3040F50044ACF2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -488,8 +479,19 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 25;
-				DEVELOPMENT_TEAM = 568T6RKXH7;
+				DEVELOPMENT_TEAM = 7DLRYPB8WK;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = NO;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
 				FRAMEWORK_SEARCH_PATHS = ../sparkle/framework;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Caffeine/Info.plist;
@@ -502,8 +504,9 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.5.3;
-				PRODUCT_BUNDLE_IDENTIFIER = net.domzilla.caffeine;
+				PRODUCT_BUNDLE_IDENTIFIER = com.miacloud.caffeine;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -519,8 +522,19 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 25;
-				DEVELOPMENT_TEAM = 568T6RKXH7;
+				DEVELOPMENT_TEAM = 7DLRYPB8WK;
+				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_INCOMING_NETWORK_CONNECTIONS = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = NO;
+				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
+				ENABLE_RESOURCE_ACCESS_BLUETOOTH = NO;
+				ENABLE_RESOURCE_ACCESS_CALENDARS = NO;
+				ENABLE_RESOURCE_ACCESS_CAMERA = NO;
+				ENABLE_RESOURCE_ACCESS_CONTACTS = NO;
+				ENABLE_RESOURCE_ACCESS_LOCATION = NO;
+				ENABLE_RESOURCE_ACCESS_PRINTING = NO;
+				ENABLE_RESOURCE_ACCESS_USB = NO;
 				FRAMEWORK_SEARCH_PATHS = ../sparkle/framework;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Caffeine/Info.plist;
@@ -533,8 +547,9 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.5.3;
-				PRODUCT_BUNDLE_IDENTIFIER = net.domzilla.caffeine;
+				PRODUCT_BUNDLE_IDENTIFIER = com.miacloud.caffeine;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -563,6 +578,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		25DC4DE22E7D5C2700021A56 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		25DC4DE32E7D5C2700021A56 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 25DC4DE22E7D5C2700021A56 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F21DAAF42C3040F50044ACF2 /* Project object */;
 }

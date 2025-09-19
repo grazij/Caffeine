@@ -8,6 +8,7 @@
 import Cocoa
 import IOKit.pwr_mgt
 import Sparkle
+import AppIntents
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUStandardUserDriverDelegate {
@@ -69,7 +70,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUStandardU
         }
     }
     
-    override func awakeFromNib() {
+    @MainActor override func awakeFromNib() {
         statusItemMenuIcon = NSImage(named: "inactive")
         statusItemMenuIcon.isTemplate = true
         statusItemMenuIconActive = NSImage(named: "active")
@@ -82,7 +83,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUStandardU
         statusItem.button?.target = self
         
         if UserDefaults.standard.bool(forKey: "CAActivateAtLaunch") {
-            self.activate()
+            Task { @MainActor in
+                self.activate()
+            }
         }
     }
     
@@ -114,7 +117,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUStandardU
         let event = NSApp.currentEvent
         let modifierFlags = event?.modifierFlags ?? []
         if event?.type == .rightMouseUp || (event?.type == .leftMouseUp && modifierFlags.contains(.control)) {
-            statusItem.popUpMenu(menu)
+            if let button = statusItem.button {
+                menu.popUp(positioning: nil, at: NSPoint(x: 0, y: button.bounds.height), in: button)
+            }
         } else {
             toggleActive(sender)
         }
@@ -131,11 +136,33 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUStandardU
         self.activate(withTimeoutDuration: seconds)
     }
     
-    @IBAction func showAbout(_ sender:Any?) {
+    @IBAction func showAbout(_ sender: Any?) {
         NSApp.activate(ignoringOtherApps: true)
-        
-        let credits = "© 2006 Tomas Franzén \n © 2018 Michael Jones \n © 2022 Dominic Rodemer \n\n Source code: \n https://github.caffeine-app.net"
-        NSApp.orderFrontStandardAboutPanel(options: [.credits : credits])
+
+        let creditsText =
+            """
+            © 2006 Tomas Franzén
+            © 2018 Michael Jones
+            © 2022 Dominic Rodemer
+
+            Source code:
+            https://github.caffeine-app.net
+            """
+
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineSpacing = 2
+        paragraph.alignment = .center
+
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: NSFont.systemFont(ofSize: NSFont.smallSystemFontSize),
+            .paragraphStyle: paragraph
+        ]
+
+        let credits = NSAttributedString(string: creditsText, attributes: attributes)
+
+        NSApp.orderFrontStandardAboutPanel(options: [
+            .credits: credits
+        ])
     }
     
     @IBAction func showPreferences(_ sender:Any?) {
@@ -150,7 +177,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUStandardU
     
     // MARK:  Public
     // MARK:  ---
-    func activate() {
+    @MainActor func activate() {
         let defaultMinutesDuration = UserDefaults.standard.integer(forKey: "CADefaultDuration")
         var seconds = defaultMinutesDuration*60
         
@@ -161,7 +188,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUStandardU
         self.activate(withTimeoutDuration: seconds)
     }
     
-    func activate(withTimeoutDuration seconds:Int) {
+    @MainActor func activate(withTimeoutDuration seconds:Int) {
         if let timeoutTimer = self.timeoutTimer {
             timeoutTimer.invalidate()
         }
@@ -178,7 +205,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUStandardU
         statusItem.button?.image = self.statusItemMenuIconActive
     }
     
-    func deactivate() {
+    @MainActor func deactivate() {
         isActive = false
         
         if let timeoutTimer = self.timeoutTimer {
@@ -189,7 +216,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUStandardU
         statusItem.button?.image = statusItemMenuIcon
     }
     
-    func toggleActive(_ sender:Any?) {
+    @MainActor func toggleActive(_ sender:Any?) {
         if let timeoutTimer = self.timeoutTimer {
             timeoutTimer.invalidate()
         }
@@ -248,8 +275,105 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, SPUStandardU
     
     @objc func workspaceWillSleepNotification(_ notification:NSNotification) {
         if UserDefaults.standard.bool(forKey: "CADeactivateOnManualSleep") {
-            self.deactivate()
+            Task { @MainActor in
+                self.deactivate()
+            }
         }
+    }
+}
+
+// MARK: - App Intents
+enum CaffeineIntentError: Swift.Error, LocalizedError {
+    case unableToActivate
+    case unableToDeactivate
+    case unableToToggle
+
+    var errorDescription: String? {
+        switch self {
+        case .unableToActivate:
+            return "Unable to activate Caffeine"
+        case .unableToDeactivate:
+            return "Unable to deactivate Caffeine"
+        case .unableToToggle:
+            return "Unable to toggle Caffeine"
+        }
+    }
+}
+
+struct EnableCaffeineIntent: AppIntent {
+    static var title: LocalizedStringResource = "Enable Caffeine"
+    static var description = IntentDescription("Activate Caffeine to prevent your Mac from sleeping")
+
+    func perform() async throws -> some IntentResult & ProvidesDialog {
+        if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
+            await appDelegate.activate()
+            return .result(dialog: IntentDialog(stringLiteral: "Caffeine is now active"))
+        }
+        throw CaffeineIntentError.unableToActivate
+    }
+}
+
+struct DisableCaffeineIntent: AppIntent {
+    static var title: LocalizedStringResource = "Disable Caffeine"
+    static var description = IntentDescription("Deactivate Caffeine to allow your Mac to sleep normally")
+
+    func perform() async throws -> some IntentResult & ProvidesDialog {
+        if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
+            await appDelegate.deactivate()
+            return .result(dialog: IntentDialog(stringLiteral: "Caffeine is now inactive"))
+        }
+        throw CaffeineIntentError.unableToDeactivate
+    }
+}
+
+struct ToggleCaffeineIntent: AppIntent {
+    static var title: LocalizedStringResource = "Toggle Caffeine"
+    static var description = IntentDescription("Toggle Caffeine between active and inactive states")
+
+    func perform() async throws -> some IntentResult & ProvidesDialog {
+        if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
+            let wasActive = appDelegate.isActive
+            await appDelegate.toggleActive(nil)
+            let message = wasActive ? "Caffeine is now inactive" : "Caffeine is now active"
+            return .result(dialog: IntentDialog(stringLiteral: message))
+        }
+        throw CaffeineIntentError.unableToToggle
+    }
+}
+
+struct CaffeineShortcutsProvider: AppShortcutsProvider {
+    static var appShortcuts: [AppShortcut] {
+        AppShortcut(
+            intent: EnableCaffeineIntent(),
+            phrases: [
+                "Enable ${applicationName}",
+                "Turn on ${applicationName}",
+                "Activate ${applicationName}"
+            ],
+            shortTitle: "Enable",
+            systemImageName: "cup.and.saucer.fill"
+        )
+
+        AppShortcut(
+            intent: DisableCaffeineIntent(),
+            phrases: [
+                "Disable ${applicationName}",
+                "Turn off ${applicationName}",
+                "Deactivate ${applicationName}"
+            ],
+            shortTitle: "Disable",
+            systemImageName: "cup.and.saucer"
+        )
+
+        AppShortcut(
+            intent: ToggleCaffeineIntent(),
+            phrases: [
+                "Toggle ${applicationName}",
+                "Switch ${applicationName}"
+            ],
+            shortTitle: "Toggle",
+            systemImageName: "switch.2"
+        )
     }
 }
 
