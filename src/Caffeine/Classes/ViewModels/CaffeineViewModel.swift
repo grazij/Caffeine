@@ -12,6 +12,11 @@ import SwiftUI
 /// Main view model for the Caffeine application
 @MainActor
 class CaffeineViewModel: ObservableObject {
+    // MARK: - Shared Instance
+
+    /// The view model backing the running app, used by App Intents (Shortcuts).
+    private(set) static weak var shared: CaffeineViewModel?
+
     // MARK: - Published Properties
 
     @Published var isActive = false
@@ -30,6 +35,8 @@ class CaffeineViewModel: ObservableObject {
         // Explicitly ensure we start inactive
         self.isActive = false
         self.timeRemaining = nil
+
+        Self.shared = self
 
         self.setupObservers()
 
