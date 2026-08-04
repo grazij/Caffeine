@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Apple Shortcuts support: Enable Caffeine (with an optional duration in minutes), Disable Caffeine and Toggle Caffeine.
+
 ### Changed
 
 - Improved Ukrainian translation.

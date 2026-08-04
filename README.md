@@ -3,6 +3,9 @@
 # Caffeine
 ### Don't let your Mac fall asleep.
 
+> A fork of [domzilla/Caffeine](https://github.com/domzilla/Caffeine)
+> adding Apple Shortcuts support. See [Fork additions](#fork-additions).
+
 Caffeine is a tiny program that keeps your Mac awake, useful for ensuring that long running tasks aren't interrupted by your computer going to sleep.
 
 ### Installation
@@ -40,6 +43,31 @@ No, this version requires at least macOS 11 (Big Sur). Caffeine for macOS Yosemi
 ##### How is Caffeine different or better than alternatives (such as Amphetamine, KeepingYouAwake, etc)?
 
 Due to the long period of inactivity for Caffeine, a lot of different and great options have been developed. While the alternatives are great apps and definitely worth your consideration, we believe that Caffeine's power lies in its simplicity and ease of use.
+
+### Fork additions
+
+Everything above is upstream Caffeine. This fork adds the following.
+
+**Apple Shortcuts**
+
+Caffeine is exposed to Shortcuts, Siri and Spotlight through App Intents, so it
+can be driven from an automation rather than only by hand from the menu bar:
+
+- **Enable Caffeine** -- takes a duration in minutes, so a shortcut can hold the
+  Mac awake for exactly as long as the task it wraps. `0`, the default, keeps it
+  awake indefinitely.
+- **Disable Caffeine**
+- **Toggle Caffeine**
+
+Each reports back to Shortcuts with a dialog, and returns a clear
+"Caffeine is not running" error if invoked before the app has finished
+launching, rather than silently doing nothing.
+
+**Sandbox**
+
+The `com.apple.security.network.server` entitlement is not granted, since the
+app accepts no incoming connections. The mach-lookup exceptions Sparkle's
+helper services need are unchanged.
 
 ### Support
 
