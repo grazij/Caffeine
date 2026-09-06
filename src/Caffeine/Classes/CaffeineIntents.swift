@@ -37,14 +37,15 @@ struct EnableCaffeineIntent: AppIntent {
     @Parameter(
         title: "Duration (minutes)",
         description: "Number of minutes to keep Caffeine active (0 = forever)",
-        default: 0
+        default: 0,
+        inclusiveRange: (0, 10080) // a week: 7 * 24 * 60; must be a literal
     )
     var durationMinutes: Int
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let viewModel = try caffeineViewModel()
-        viewModel.activate(withTimeout: TimeInterval(max(0, self.durationMinutes) * 60))
+        viewModel.activate(withTimeout: TimeInterval(self.durationMinutes * 60))
 
         let dialog: IntentDialog = if self.durationMinutes > 0 {
             "Caffeine is now active for \(self.durationMinutes) minutes"
