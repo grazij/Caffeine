@@ -15,7 +15,7 @@ class CaffeineViewModel: ObservableObject {
     // MARK: - Shared Instance
 
     /// The view model backing the running app, used by App Intents (Shortcuts).
-    private(set) static weak var shared: CaffeineViewModel?
+    private(set) weak static var shared: CaffeineViewModel?
 
     // MARK: - Published Properties
 
