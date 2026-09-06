@@ -9,7 +9,7 @@ import AppIntents
 import Foundation
 
 /// Errors surfaced to Shortcuts when the app is not ready to handle an intent.
-enum CaffeineIntentError: Swift.Error, LocalizedError {
+enum CaffeineIntentError: LocalizedError {
     case appNotReady
 
     var errorDescription: String? {
@@ -31,8 +31,8 @@ private func caffeineViewModel() throws -> CaffeineViewModel {
 
 /// Activates Caffeine, optionally for a fixed number of minutes.
 struct EnableCaffeineIntent: AppIntent {
-    static var title: LocalizedStringResource = "Enable Caffeine"
-    static var description = IntentDescription("Activate Caffeine to prevent your Mac from sleeping")
+    static let title: LocalizedStringResource = "Enable Caffeine"
+    static let description = IntentDescription("Activate Caffeine to prevent your Mac from sleeping")
 
     @Parameter(
         title: "Duration (minutes)",
@@ -58,8 +58,8 @@ struct EnableCaffeineIntent: AppIntent {
 
 /// Deactivates Caffeine.
 struct DisableCaffeineIntent: AppIntent {
-    static var title: LocalizedStringResource = "Disable Caffeine"
-    static var description = IntentDescription("Deactivate Caffeine to allow your Mac to sleep normally")
+    static let title: LocalizedStringResource = "Disable Caffeine"
+    static let description = IntentDescription("Deactivate Caffeine to allow your Mac to sleep normally")
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
@@ -70,8 +70,8 @@ struct DisableCaffeineIntent: AppIntent {
 
 /// Toggles Caffeine between active and inactive.
 struct ToggleCaffeineIntent: AppIntent {
-    static var title: LocalizedStringResource = "Toggle Caffeine"
-    static var description = IntentDescription("Toggle Caffeine between active and inactive states")
+    static let title: LocalizedStringResource = "Toggle Caffeine"
+    static let description = IntentDescription("Toggle Caffeine between active and inactive states")
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
