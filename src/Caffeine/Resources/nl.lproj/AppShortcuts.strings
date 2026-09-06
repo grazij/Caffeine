@@ -1,0 +1,6 @@
+/* Siri and Spotlight phrases; ${applicationName} is substituted at runtime */
+"Enable ${applicationName}" = "Schakel ${applicationName} in";
+"Turn on ${applicationName}" = "Zet ${applicationName} aan";
+"Disable ${applicationName}" = "Schakel ${applicationName} uit";
+"Turn off ${applicationName}" = "Zet ${applicationName} uit";
+"Toggle ${applicationName}" = "Schakel ${applicationName} om";

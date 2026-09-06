@@ -1,0 +1,6 @@
+/* Siri and Spotlight phrases; ${applicationName} is substituted at runtime */
+"Enable ${applicationName}" = "${applicationName}を有効にする";
+"Turn on ${applicationName}" = "${applicationName}をオンにする";
+"Disable ${applicationName}" = "${applicationName}を無効にする";
+"Turn off ${applicationName}" = "${applicationName}をオフにする";
+"Toggle ${applicationName}" = "${applicationName}を切り替える";

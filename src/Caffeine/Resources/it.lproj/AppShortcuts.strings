@@ -1,0 +1,6 @@
+/* Siri and Spotlight phrases; ${applicationName} is substituted at runtime */
+"Enable ${applicationName}" = "Attiva ${applicationName}";
+"Turn on ${applicationName}" = "Accendi ${applicationName}";
+"Disable ${applicationName}" = "Disattiva ${applicationName}";
+"Turn off ${applicationName}" = "Spegni ${applicationName}";
+"Toggle ${applicationName}" = "Attiva o disattiva ${applicationName}";

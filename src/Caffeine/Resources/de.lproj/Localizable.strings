@@ -43,3 +43,18 @@
 /* System messages */
 "Caffeine prevents sleep" = "Caffeine verhindert den Ruhezustand";
 
+
+/* Shortcuts (App Intents) */
+"Enable Caffeine" = "Caffeine aktivieren";
+"Disable Caffeine" = "Caffeine deaktivieren";
+"Toggle Caffeine" = "Caffeine umschalten";
+"Activate Caffeine to prevent your Mac from sleeping" = "Aktiviert Caffeine, damit dein Mac nicht in den Ruhezustand wechselt";
+"Deactivate Caffeine to allow your Mac to sleep normally" = "Deaktiviert Caffeine, damit dein Mac wieder normal in den Ruhezustand wechseln kann";
+"Toggle Caffeine between active and inactive states" = "Schaltet Caffeine zwischen aktiviert und deaktiviert um";
+"Duration (minutes)" = "Dauer (Minuten)";
+"Number of minutes to keep Caffeine active (0 = forever)" = "Anzahl der Minuten, die Caffeine aktiviert bleibt (0 = unbegrenzt)";
+"Caffeine is now active for %lld minutes" = "Caffeine ist jetzt für %lld Minuten aktiviert";
+"Caffeine is now active indefinitely" = "Caffeine ist jetzt unbegrenzt aktiviert";
+"Caffeine is now active" = "Caffeine ist jetzt aktiviert";
+"Caffeine is now inactive" = "Caffeine ist jetzt deaktiviert";
+"Caffeine is not running" = "Caffeine läuft nicht";

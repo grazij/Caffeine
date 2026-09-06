@@ -42,3 +42,18 @@
 
 /* System messages */
 "Caffeine prevents sleep" = "Caffeine предотвращает переход в сон";
+
+/* Shortcuts (App Intents) */
+"Enable Caffeine" = "Включить Caffeine";
+"Disable Caffeine" = "Выключить Caffeine";
+"Toggle Caffeine" = "Переключить Caffeine";
+"Activate Caffeine to prevent your Mac from sleeping" = "Включает Caffeine, чтобы Mac не переходил в сон";
+"Deactivate Caffeine to allow your Mac to sleep normally" = "Выключает Caffeine, чтобы Mac мог переходить в сон как обычно";
+"Toggle Caffeine between active and inactive states" = "Переключает Caffeine между активным и неактивным состоянием";
+"Duration (minutes)" = "Длительность (минуты)";
+"Number of minutes to keep Caffeine active (0 = forever)" = "Количество минут, в течение которых Caffeine остаётся активен (0 = бессрочно)";
+"Caffeine is now active for %lld minutes" = "Caffeine теперь активен на %lld минут";
+"Caffeine is now active indefinitely" = "Caffeine теперь активен бессрочно";
+"Caffeine is now active" = "Caffeine теперь активен";
+"Caffeine is now inactive" = "Caffeine теперь неактивен";
+"Caffeine is not running" = "Caffeine не запущен";

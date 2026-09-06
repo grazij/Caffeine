@@ -42,3 +42,18 @@
 
 /* System messages */
 "Caffeine prevents sleep" = "Caffeine voorkomt sluimerstand";
+
+/* Shortcuts (App Intents) */
+"Enable Caffeine" = "Caffeine inschakelen";
+"Disable Caffeine" = "Caffeine uitschakelen";
+"Toggle Caffeine" = "Caffeine omschakelen";
+"Activate Caffeine to prevent your Mac from sleeping" = "Schakelt Caffeine in zodat je Mac niet in de sluimerstand gaat";
+"Deactivate Caffeine to allow your Mac to sleep normally" = "Schakelt Caffeine uit zodat je Mac weer normaal in de sluimerstand kan gaan";
+"Toggle Caffeine between active and inactive states" = "Schakelt Caffeine om tussen actief en inactief";
+"Duration (minutes)" = "Duur (minuten)";
+"Number of minutes to keep Caffeine active (0 = forever)" = "Aantal minuten dat Caffeine actief blijft (0 = onbepaalde tijd)";
+"Caffeine is now active for %lld minutes" = "Caffeine is nu %lld minuten actief";
+"Caffeine is now active indefinitely" = "Caffeine is nu voor onbepaalde tijd actief";
+"Caffeine is now active" = "Caffeine is nu actief";
+"Caffeine is now inactive" = "Caffeine is nu inactief";
+"Caffeine is not running" = "Caffeine draait niet";

@@ -43,3 +43,18 @@
 /* System messages */
 "Caffeine prevents sleep" = "Caffeine 会阻止睡眠";
 
+
+/* Shortcuts (App Intents) */
+"Enable Caffeine" = "启用 Caffeine";
+"Disable Caffeine" = "停用 Caffeine";
+"Toggle Caffeine" = "切换 Caffeine";
+"Activate Caffeine to prevent your Mac from sleeping" = "启用 Caffeine，阻止您的 Mac 进入睡眠";
+"Deactivate Caffeine to allow your Mac to sleep normally" = "停用 Caffeine，让您的 Mac 正常进入睡眠";
+"Toggle Caffeine between active and inactive states" = "在激活和停用之间切换 Caffeine";
+"Duration (minutes)" = "时长（分钟）";
+"Number of minutes to keep Caffeine active (0 = forever)" = "Caffeine 保持激活的分钟数（0 = 无限期）";
+"Caffeine is now active for %lld minutes" = "Caffeine 现已激活 %lld 分钟";
+"Caffeine is now active indefinitely" = "Caffeine 现已无限期激活";
+"Caffeine is now active" = "Caffeine 现已激活";
+"Caffeine is now inactive" = "Caffeine 现已停用";
+"Caffeine is not running" = "Caffeine 未在运行";

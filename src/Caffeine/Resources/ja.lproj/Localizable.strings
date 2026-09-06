@@ -43,3 +43,18 @@
 /* System messages */
 "Caffeine prevents sleep" = "Caffeine がスリープを防ぎます";
 
+
+/* Shortcuts (App Intents) */
+"Enable Caffeine" = "Caffeineを有効にする";
+"Disable Caffeine" = "Caffeineを無効にする";
+"Toggle Caffeine" = "Caffeineを切り替える";
+"Activate Caffeine to prevent your Mac from sleeping" = "Caffeineを有効にして、Macがスリープしないようにします";
+"Deactivate Caffeine to allow your Mac to sleep normally" = "Caffeineを無効にして、Macが通常どおりスリープできるようにします";
+"Toggle Caffeine between active and inactive states" = "Caffeineの有効と無効を切り替えます";
+"Duration (minutes)" = "時間（分）";
+"Number of minutes to keep Caffeine active (0 = forever)" = "Caffeineを有効にしておく分数（0 = 無期限）";
+"Caffeine is now active for %lld minutes" = "Caffeineは%lld分間有効になりました";
+"Caffeine is now active indefinitely" = "Caffeineは無期限に有効になりました";
+"Caffeine is now active" = "Caffeineは有効になりました";
+"Caffeine is now inactive" = "Caffeineは無効になりました";
+"Caffeine is not running" = "Caffeineは起動していません";
