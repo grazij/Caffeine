@@ -46,15 +46,12 @@ struct EnableCaffeineIntent: AppIntent {
         let viewModel = try caffeineViewModel()
         viewModel.activate(withTimeout: TimeInterval(max(0, self.durationMinutes) * 60))
 
-        let message: String = if self.durationMinutes > 0 {
-            String.localizedStringWithFormat(
-                String(localized: "Caffeine is now active for %d minutes"),
-                self.durationMinutes
-            )
+        let dialog: IntentDialog = if self.durationMinutes > 0 {
+            "Caffeine is now active for \(self.durationMinutes) minutes"
         } else {
-            String(localized: "Caffeine is now active indefinitely")
+            "Caffeine is now active indefinitely"
         }
-        return .result(dialog: IntentDialog(stringLiteral: message))
+        return .result(dialog: dialog)
     }
 }
 
@@ -66,7 +63,7 @@ struct DisableCaffeineIntent: AppIntent {
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
         try caffeineViewModel().deactivate()
-        return .result(dialog: IntentDialog(stringLiteral: String(localized: "Caffeine is now inactive")))
+        return .result(dialog: "Caffeine is now inactive")
     }
 }
 
@@ -80,10 +77,10 @@ struct ToggleCaffeineIntent: AppIntent {
         let viewModel = try caffeineViewModel()
         viewModel.toggleActive()
 
-        let message = viewModel.isActive
-            ? String(localized: "Caffeine is now active")
-            : String(localized: "Caffeine is now inactive")
-        return .result(dialog: IntentDialog(stringLiteral: message))
+        let dialog: IntentDialog = viewModel.isActive
+            ? "Caffeine is now active"
+            : "Caffeine is now inactive"
+        return .result(dialog: dialog)
     }
 }
 
