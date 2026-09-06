@@ -22,5 +22,45 @@
 			<string>Caffeine тепер увімкнено на %lld хвилини</string>
 		</dict>
 	</dict>
+	<key>%d minutes</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d хвилина</string>
+			<key>few</key>
+			<string>%d хвилини</string>
+			<key>many</key>
+			<string>%d хвилин</string>
+			<key>other</key>
+			<string>%d хвилини</string>
+		</dict>
+	</dict>
+	<key>%d seconds</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d секунда</string>
+			<key>few</key>
+			<string>%d секунди</string>
+			<key>many</key>
+			<string>%d секунд</string>
+			<key>other</key>
+			<string>%d секунди</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

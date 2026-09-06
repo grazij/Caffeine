@@ -18,5 +18,37 @@
 			<string>Caffeine ist jetzt für %lld Minuten aktiviert</string>
 		</dict>
 	</dict>
+	<key>%d minutes</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Minute</string>
+			<key>other</key>
+			<string>%d Minuten</string>
+		</dict>
+	</dict>
+	<key>%d seconds</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%d Sekunde</string>
+			<key>other</key>
+			<string>%d Sekunden</string>
+		</dict>
+	</dict>
 </dict>
 </plist>
