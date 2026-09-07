@@ -12,6 +12,14 @@ import SwiftUI
 
 @MainActor
 class MenuBarController: NSObject {
+    /// Whether the "Check for Updates..." menu item is offered.
+    ///
+    /// The updater is never started (see `AppDelegate`), so showing the item
+    /// would only raise Sparkle's "app is misconfigured" alert. Flip this back
+    /// to `true` once this fork publishes an appcast of its own; the menu
+    /// title is still translated in every language.
+    private static let updatesEnabled = false
+
     private var statusItem: NSStatusItem?
     private var viewModel: CaffeineViewModel
     private var preferencesWindow: NSWindow?
@@ -156,13 +164,15 @@ class MenuBarController: NSObject {
         menu.addItem(aboutItem)
 
         // Update
-        let updatesItem = NSMenuItem(
-            title: String(localized: "Check for Updates..."),
-            action: #selector(checkForUpdates(_:)),
-            keyEquivalent: ""
-        )
-        updatesItem.target = self
-        menu.addItem(updatesItem)
+        if Self.updatesEnabled {
+            let updatesItem = NSMenuItem(
+                title: String(localized: "Check for Updates..."),
+                action: #selector(checkForUpdates(_:)),
+                keyEquivalent: ""
+            )
+            updatesItem.target = self
+            menu.addItem(updatesItem)
+        }
 
         menu.addItem(NSMenuItem.separator())
 
@@ -194,6 +204,7 @@ class MenuBarController: NSObject {
 
     @objc
     private func checkForUpdates(_ sender: Any?) {
+        guard Self.updatesEnabled else { return }
         self.updaterController.checkForUpdates(sender)
     }
 

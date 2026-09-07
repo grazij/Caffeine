@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Caffeine no longer checks for updates. The only update feed it ever had was
+  upstream's, which would have replaced this fork with upstream's build.
 - The About panel now links to this fork's source repository.
 - Improved Ukrainian translation.
 
