@@ -64,12 +64,17 @@ iOSInjectionProject/
 
 .DS_Store
 *.swp
-/sparkle/framework/bin
-/sparkle/framework/CHANGELOG
-/sparkle/framework/INSTALL
-/sparkle/framework/LICENSE
-/sparkle/framework/SampleAppcast.xml
-/sparkle/framework/Sparkle Test App.app
-/sparkle/framework/sparkle.app
-/sparkle/framework/Sparkle.framework
-/sparkle/release
+
+# Build system
+.env
+
+# Xcode project internals; keep the project file and shared schemes.
+# The leading **/ is load-bearing: a pattern containing a slash is anchored to
+# this file's directory, and the project lives at src/, not the repo root.
+**/*.xcodeproj/*
+!**/*.xcodeproj/project.pbxproj
+!**/*.xcodeproj/xcshareddata/
+!**/*.xcodeproj/project.xcworkspace/
+**/*.xcworkspace/*
+!**/*.xcworkspace/contents.xcworkspacedata
+!**/*.xcworkspace/xcshareddata/
