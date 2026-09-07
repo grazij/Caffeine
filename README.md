@@ -1,4 +1,4 @@
-<img src="https://github.caffeine-app.net/assets/icon.png" alt="Icon" width="239"/>
+<img src="assets/Cup.png" alt="Icon" width="239"/>
 
 # Caffeine
 ### Don't let your Mac fall asleep.
@@ -10,7 +10,7 @@ Caffeine is a tiny program that keeps your Mac awake, useful for ensuring that l
 
 ### Installation
 
-Download Caffeine at https://caffeine-app.net and drag it into your Applications folder, then double-click the icon to launch it.
+Download the latest release from https://github.com/grazij/Caffeine/releases and drag Caffeine into your Applications folder, then double-click the icon to launch it.
 
 ### Usage
 
@@ -59,4 +59,4 @@ can be used in automation workflows.
 
 ### Support
 
-If you have questions, comments or other feedback get in touch at https://caffeine-app.net/support.
+If you have questions, comments or other feedback open an issue at https://github.com/grazij/Caffeine/issues.
