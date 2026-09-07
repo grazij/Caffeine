@@ -51,23 +51,11 @@ Everything above is upstream Caffeine. This fork adds the following.
 **Apple Shortcuts**
 
 Caffeine is exposed to Shortcuts, Siri and Spotlight through App Intents, so it
-can be driven from an automation rather than only by hand from the menu bar:
+can be used in automation workflows.
 
-- **Enable Caffeine** -- takes a duration in minutes, so a shortcut can hold the
-  Mac awake for exactly as long as the task it wraps. `0`, the default, keeps it
-  awake indefinitely.
+- **Enable Caffeine** -- takes an optional duration in minutes. Leave it blank to use your default duration; 0 keeps the Mac awake indefinitely.
 - **Disable Caffeine**
 - **Toggle Caffeine**
-
-Each reports back to Shortcuts with a dialog, and returns a clear
-"Caffeine is not running" error if invoked before the app has finished
-launching, rather than silently doing nothing.
-
-**Sandbox**
-
-The `com.apple.security.network.server` entitlement is not granted, since the
-app accepts no incoming connections. The mach-lookup exceptions Sparkle's
-helper services need are unchanged.
 
 ### Support
 
