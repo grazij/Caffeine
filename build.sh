@@ -194,7 +194,19 @@ sign_nested_code() {
     local app_path="$1"
     local identity="$2"
 
-    [ -n "${NESTED_CODE_PATHS:-}" ] || return 0
+    if [ -z "${NESTED_CODE_PATHS:-}" ]; then
+        # An empty list is only legitimate for an app that embeds no code. If
+        # Frameworks/ exists, the vendored bundles are still ad-hoc signed and
+        # notarization will reject every one of them -- after a full build, a
+        # DMG and an upload. Fail here instead, where the cause is obvious.
+        if [ -d "$app_path/Contents/Frameworks" ]; then
+            print_error "NESTED_CODE_PATHS is empty but $APP_NAME embeds frameworks"
+            print_info "List them innermost-first in .env; see .env.example"
+            ls "$app_path/Contents/Frameworks"
+            exit 1
+        fi
+        return 0
+    fi
 
     print_info "Signing nested code (inside-out)..."
     local rel abs
@@ -299,6 +311,30 @@ sign_for_distribution() {
         print_error "Code signing failed"
         exit 1
     fi
+}
+
+# Sign the disk image with the same Developer ID used for the app.
+#
+# hdiutil emits an unsigned image, and notarizing plus stapling it does not add
+# a signature: `spctl -a -t open` still reports "no usable signature". Signing
+# it before submission is what makes the downloaded DMG itself assessable.
+sign_dmg() {
+    print_header "Signing DMG"
+
+    local dmg_path identity
+    dmg_path="$(get_dmg_path)"
+    identity="$(get_dist_signing_identity)"
+
+    if [ ! -f "$dmg_path" ]; then
+        print_error "DMG not found: $dmg_path"
+        exit 1
+    fi
+
+    print_info "Identity: $identity"
+    codesign --force --sign "$identity" --timestamp "$dmg_path"
+    codesign --verify --strict "$dmg_path"
+    print_success "DMG signed"
+    echo ""
 }
 
 create_dmg() {
@@ -448,8 +484,26 @@ notarize_build() {
     print_info "Submitting for notarization..."
     echo ""
 
-    local result=0
-    xcrun notarytool "$@" || result=$?
+    # notarytool exits 0 as long as the *submission* succeeded, even when the
+    # verdict is Invalid -- so the exit status alone would report a rejected
+    # build as notarized, and stapling would then fail with a confusing
+    # "Record not found". Read the verdict out of the output as well.
+    local result=0 submit_log
+    submit_log="$BUILD_DIR/notarytool-submit.log"
+    set -o pipefail
+    xcrun notarytool "$@" 2>&1 | tee "$submit_log" || result=$?
+    set +o pipefail
+
+    if [ $result -eq 0 ] && ! grep -q "status: Accepted" "$submit_log"; then
+        result=1
+        print_error "Notarization was rejected by Apple"
+        local submission_id
+        submission_id=$(grep -m1 "  id: " "$submit_log" | awk '{print $2}')
+        if [ -n "$submission_id" ]; then
+            print_info "Read the rejection with:"
+            echo "  xcrun notarytool log $submission_id --keychain-profile ${keychain_profile:-PROFILE}"
+        fi
+    fi
 
     echo ""
 
@@ -712,7 +766,15 @@ case $COMMAND in
         [ "$NO_CLEAN" = false ] && clean_build
         build_configuration "Release" $VERBOSE
         sign_for_distribution
+        # Notarize the app first and staple the ticket to it, so the .app is
+        # self-sufficient once Homebrew copies it out of the DMG. Stapling only
+        # the DMG leaves the app relying on an online check with Apple, which
+        # fails on a machine that is offline or behind a filtered network.
+        notarize_build --app "${NOTARIZE_ARGS[@]}"
+        # Build the DMG from the now-stapled app, then sign it: an unsigned DMG
+        # is rejected by spctl even after its own ticket is stapled.
         create_dmg
+        sign_dmg
         notarize_build "${NOTARIZE_ARGS[@]}"
         ;;
     install)
