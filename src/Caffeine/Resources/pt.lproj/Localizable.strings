@@ -51,7 +51,7 @@
 "Deactivate Caffeine to allow your Mac to sleep normally" = "Desativa o Caffeine para permitir que o Mac entre em repouso normalmente";
 "Toggle Caffeine between active and inactive states" = "Alterna o Caffeine entre ativo e inativo";
 "Duration (minutes)" = "Duração (minutos)";
-"Number of minutes to keep Caffeine active (0 = forever)" = "Número de minutos durante os quais o Caffeine permanece ativo (0 = indefinidamente)";
+"Number of minutes to keep Caffeine active (blank = your default duration, 0 = forever)" = "Número de minutos durante os quais o Caffeine permanece ativo (vazio = duração predefinida, 0 = indefinidamente)";
 "Caffeine is now active for %lld minutes" = "O Caffeine está agora ativo durante %lld minutos";
 "Caffeine is now active indefinitely" = "O Caffeine está agora ativo indefinidamente";
 "Caffeine is now active" = "O Caffeine está agora ativo";

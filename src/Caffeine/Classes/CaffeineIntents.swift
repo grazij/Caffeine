@@ -29,26 +29,31 @@ private func caffeineViewModel() throws -> CaffeineViewModel {
     return viewModel
 }
 
-/// Activates Caffeine, optionally for a fixed number of minutes.
+/// Activates Caffeine for a fixed number of minutes, for the user's default duration, or indefinitely.
 struct EnableCaffeineIntent: AppIntent {
     static let title: LocalizedStringResource = "Enable Caffeine"
     static let description = IntentDescription("Activate Caffeine to prevent your Mac from sleeping")
 
     @Parameter(
         title: "Duration (minutes)",
-        description: "Number of minutes to keep Caffeine active (0 = forever)",
-        default: 0,
+        description: "Number of minutes to keep Caffeine active (blank = your default duration, 0 = forever)",
         inclusiveRange: (0, 10080) // a week: 7 * 24 * 60; must be a literal
     )
-    var durationMinutes: Int
+    var durationMinutes: Int?
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let viewModel = try caffeineViewModel()
-        viewModel.activate(withTimeout: TimeInterval(self.durationMinutes * 60))
+        // nil falls through to the user's default-duration preference; 0 means indefinitely.
+        if let minutes = self.durationMinutes {
+            viewModel.activate(withTimeout: TimeInterval(minutes * 60))
+        } else {
+            viewModel.activate()
+        }
 
-        let dialog: IntentDialog = if self.durationMinutes > 0 {
-            "Caffeine is now active for \(self.durationMinutes) minutes"
+        // Report the duration that actually applied, which may come from the preference.
+        let dialog: IntentDialog = if let remaining = viewModel.timeRemaining, remaining > 0 {
+            "Caffeine is now active for \(Int((remaining / 60).rounded())) minutes"
         } else {
             "Caffeine is now active indefinitely"
         }

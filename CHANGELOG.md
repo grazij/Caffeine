@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Apple Shortcuts support: Enable Caffeine (with an optional duration in minutes), Disable Caffeine and Toggle Caffeine.
+- Apple Shortcuts support: Enable Caffeine (with an optional duration in minutes; leave it blank to use your default duration, 0 keeps the Mac awake indefinitely), Disable Caffeine and Toggle Caffeine.
 
 ### Changed
 
