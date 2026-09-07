@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The About panel now links to this fork's source repository.
 - Improved Ukrainian translation.
 
 ### Fixed
