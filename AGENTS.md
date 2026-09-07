@@ -8,10 +8,7 @@ macOS menu bar app that prevents your Mac from sleeping.
 - **UI Framework**: SwiftUI
 - **IDE**: Xcode
 - **Platforms**: macOS
-- **Minimum Deployment**: macOS 13.5
-
-## Style & Conventions (MANDATORY)
-**Strictly follow** the Swift/SwiftUI style guide: `~/Agents/Style/swift-swiftui-style-guide.md`
+- **Minimum Deployment**: macOS 14.6
 
 ## Changelog (MANDATORY)
 **All important user facing changes** (fixes, additions, deletions, changes) must be written to CHANGELOG.md.
@@ -19,20 +16,12 @@ Changelog format is based on [Keep a Changelog](https://keepachangelog.com/en/1.
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Localization (MANDATORY)
-**Strictly follow** the localization guide: `~/Agents/Guides/localization-guide.md`
 - All user-facing strings must be localized
 - Follow formality rules per language
 - Consistency is paramount
 
-## Additional Guides
-- Modern SwiftUI patterns: `~/Agents/Guides/swift-modern-development-guide.md`
-- Observable migration: `~/Agents/Guides/swift-observable-migration-guide.md`
-- Swift 6 concurrency: `~/Agents/Guides/swift6-concurrency-guide.md`
-- Swift 6 migration (compact): `~/Agents/Guides/swift6-migration-compact-guide.md`
-- Swift 6 migration (full): `~/Agents/Guides/swift6-migration-full-guide.md`
-
 ## Logging (MANDATORY)
-This project uses **DZFoundation** (`~/GIT/Libraries/DZFoundation`) for logging.
+This project uses **DZFoundation** (Swift package from https://github.com/domzilla/DZFoundation) for logging.
 
 **All debug logging must use:**
 - `DZLog("message")` — General debug output
@@ -51,17 +40,6 @@ DZErrorLog(error)             // ❌ MyFile.swift:45 fetchData() ERROR: Network 
 - `NSLog`
 
 Both functions are no-ops in release builds.
-
-## API Documentation
-Local Apple API documentation is available at:
-`~/Agents/API Documentation/Apple/`
-
-The `search` binary is located **inside** the documentation folder:
-```bash
-~/Agents/API\ Documentation/Apple/search --help  # Run once per session
-~/Agents/API\ Documentation/Apple/search "view controller" --language swift
-~/Agents/API\ Documentation/Apple/search "NSWindow" --type Class
-```
 
 ## Xcode Project Files (CATASTROPHIC — DO NOT TOUCH)
 - **NEVER edit Xcode project files** (`.xcodeproj`, `.xcworkspace`, `project.pbxproj`, `.xcsettings`, etc.)
@@ -110,7 +88,7 @@ SwiftFormat configuration is defined in `.swiftformat` at the project root. This
 ---
 
 ## Notes
-- The style guide emphasizes native SwiftUI patterns over MVVM boilerplate
+- Prefer native SwiftUI patterns over MVVM boilerplate
 - Prefer `@Observable` (macOS 14+) over `ObservableObject`
 - Use `async/await` and `.task` modifier for async work
 - Avoid Combine unless specifically needed
