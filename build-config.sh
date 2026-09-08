@@ -46,28 +46,45 @@ set -a && source "$ENV_FILE" && set +a
 # Project Information
 ################################################################################
 
-# Read a version-ish key, preferring the built app's resolved Info.plist over
-# the source one. A target with GENERATE_INFOPLIST_FILE = YES keeps the version
-# in the MARKETING_VERSION / CURRENT_PROJECT_VERSION build settings and injects
-# it at build time, so the source plist has no such key at all and the bare
-# plutil read below falls through to the placeholder — which would name the DMG
-# and the git tag after a version that does not exist.
+# Read a version-ish key, preferring the source Info.plist and falling back to
+# the built app's resolved one.
+#
+# The source plist is authoritative wherever it actually carries the key: it is
+# the file a human edits, and it is right even when build/ holds a stale or
+# half-finished build. But a target with GENERATE_INFOPLIST_FILE = YES keeps the
+# version in the MARKETING_VERSION / CURRENT_PROJECT_VERSION build settings and
+# injects it at build time, so its source plist has no such key and a bare read
+# yields the placeholder — which would name the DMG and the git tag after a
+# version that does not exist. Hence: source first, built app second, and treat
+# an unexpanded $(…) reference as absent in both.
 _plist_value() {
     local key="$1"
-    local value="" config built_plist
+    local value="" config candidate
+
+    value=$(plutil -extract "$key" raw "$PROJECT_ROOT/$INFO_PLIST_PATH" 2>/dev/null)
+    if _plist_value_is_literal "$value"; then
+        echo "$value"
+        return 0
+    fi
+
     for config in Release Debug; do
-        built_plist="$(get_absolute_build_dir)/$config/$APP_NAME/Contents/Info.plist"
-        if [ -f "$built_plist" ]; then
-            value=$(plutil -extract "$key" raw "$built_plist" 2>/dev/null) && break
+        candidate="$(get_absolute_build_dir)/$config/$APP_NAME/Contents/Info.plist"
+        [ -f "$candidate" ] || continue
+        value=$(plutil -extract "$key" raw "$candidate" 2>/dev/null) || continue
+        if _plist_value_is_literal "$value"; then
+            echo "$value"
+            return 0
         fi
     done
-    if [ -z "$value" ]; then
-        value=$(plutil -extract "$key" raw "$PROJECT_ROOT/$INFO_PLIST_PATH" 2>/dev/null)
-    fi
-    case "$value" in
+
+    return 1
+}
+
+_plist_value_is_literal() {
+    case "$1" in
         ""|*'$('*) return 1 ;;
+        *) return 0 ;;
     esac
-    echo "$value"
 }
 
 get_version() {
